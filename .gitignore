@@ -1,0 +1,7 @@
+
+.idea
+.metals
+target
+project/target
+.bloop
+project/.bloop

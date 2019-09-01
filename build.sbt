@@ -1,4 +1,4 @@
-name := "sbt-demo"
+name := "scala-demo"
 
 version := "1.0"
 

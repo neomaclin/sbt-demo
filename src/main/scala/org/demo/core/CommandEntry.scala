@@ -2,6 +2,7 @@ package org.demo.core
 
 import cats.effect.{ExitCode, IO}
 import enumeratum.{Enum, EnumEntry}
+import monix.eval.Task
 import org.backuity.clist.{Command, opt}
 
 sealed abstract class CommandEntry(name: String, description: String)

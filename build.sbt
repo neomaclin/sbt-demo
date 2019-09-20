@@ -2,25 +2,24 @@ name := "scala-demo"
 
 version := "1.0"
 
-scalaVersion := "2.12.8"
-
-scalacOptions += "-Ypartial-unification"
+scalaVersion := "2.13.1"
 
 libraryDependencies ++= typelevel ++ reactive ++ validation ++ auxiliary
 
-lazy val typelevel = cats ++ shapeless ++ spire
-lazy val reactive = akka ++ http
-lazy val auxiliary = logs ++ enums ++ args
+lazy val typelevel = cats ++ shapeless ++ monix
+lazy val reactive = akka ++ http ++ circe
+lazy val auxiliary = logs ++ enums ++ args ++ validation
 
 lazy val cats = {
-   val catsVersion  = "1.6.0"
-   Seq("org.typelevel" %% "cats-effect" % "1.3.1", "org.typelevel" %% "kittens" % "1.1.0") ++
-   Seq("org.typelevel" %% "cats-core", "org.typelevel" %% "cats-free").map(_ % catsVersion)
+  Seq(
+    "org.typelevel" %% "kittens" ,
+    "org.typelevel" %% "cats-effect",
+    "org.typelevel" %% "cats-core",
+    "org.typelevel" %% "cats-free"
+  ).map(_ % "2.0.0")
 }
 
-lazy val spire = {
-  Seq("org.typelevel" %% "spire" % "0.16.2")
-}
+
 lazy val shapeless = {
   Seq(
     "com.chuusai" %% "shapeless" % "2.3.3",
@@ -28,43 +27,52 @@ lazy val shapeless = {
   )
 }
 
+lazy val monix = {
+  Seq("io.monix" %% "monix" % "3.0.0")
+}
+
 lazy val validation = {
   Seq(
-    "org.scalacheck" %% "scalacheck"                  % "1.13.4",
-    "org.scalatest"  %% "scalatest"                   % "3.0.1",
-    "org.scalamock"  %% "scalamock-scalatest-support" % "3.5.0"
+    "org.scalacheck" %% "scalacheck" % "1.14.0",
+    "org.scalatest" %% "scalatest" % "3.0.8",
+    "org.scalamock" %% "scalamock" % "4.4.0"
   ).map(_ % Test)
 }
 
+
 lazy val akka = {
-  val akkaVersion = "2.5.22"
+  val akkaVersion = "2.5.25"
   Seq(
-    "com.typesafe.akka"   %% "akka-actor"              % akkaVersion,
-    "com.typesafe.akka"   %% "akka-stream"             % akkaVersion,
-    "com.typesafe.akka"   %% "akka-cluster-sharding"   % akkaVersion,
-    "com.typesafe.akka"   %% "akka-persistence"        % akkaVersion excludeAll (ExclusionRule("io.netty")),
-    "com.typesafe.akka"   %% "akka-persistence-query"  % akkaVersion,
-    "com.typesafe.akka"   %% "akka-distributed-data"   % akkaVersion,
-    "com.typesafe.akka"   %% "akka-multi-node-testkit" % akkaVersion,
-    "com.typesafe.akka"   %% "akka-testkit"            % akkaVersion % Test,
-    "com.typesafe.akka"   %% "akka-stream-testkit"     % akkaVersion % Test
+    "com.typesafe.akka" %% "akka-actor" % akkaVersion,
+    "com.typesafe.akka" %% "akka-stream" % akkaVersion,
+    "com.typesafe.akka" %% "akka-cluster-sharding" % akkaVersion,
+    "com.typesafe.akka" %% "akka-cluster-metrics" % akkaVersion,
+    "com.typesafe.akka" %% "akka-cluster-tools" % akkaVersion,
+    "com.typesafe.akka" %% "akka-persistence" % akkaVersion excludeAll (ExclusionRule(
+      "io.netty"
+    )),
+    "com.typesafe.akka" %% "akka-persistence-query" % akkaVersion,
+    "com.typesafe.akka" %% "akka-distributed-data" % akkaVersion,
+    "com.typesafe.akka" %% "akka-multi-node-testkit" % akkaVersion,
+    "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test,
+    "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test
   )
 }
 
+
 lazy val http = {
-  val akkaHttpVersion = "10.1.8"
+  val akkaHttpVersion = "10.1.9"
   Seq(
     "com.typesafe.akka" %% "akka-http"            % akkaHttpVersion,
-    "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpVersion,
     "com.typesafe.akka" %% "akka-http-testkit"    % akkaHttpVersion,
-    "de.heikoseeberger" %% "akka-http-circe"      % "1.21.0"
+    "de.heikoseeberger" %% "akka-http-circe"      % "1.28.0"
   )
 }
 
 lazy val logs = {
   Seq(
     "ch.qos.logback" % "logback-classic" % "1.2.3",
-    "com.typesafe.scala-logging" %% "scala-logging" % "3.9.0"
+    "com.typesafe.scala-logging" %% "scala-logging" % "3.9.2"
   )
 }
 
@@ -79,6 +87,19 @@ lazy val args = {
 lazy val enums = {
   Seq(
     "com.beachape" %% "enumeratum" % "1.5.13",
-    "com.beachape" %% "enumeratum-cats" % "1.5.15"
+    "com.beachape" %% "enumeratum-circe" % "1.5.21",
+    "com.beachape" %% "enumeratum-cats" % "1.5.16"
   )
 }
+
+
+lazy val circe = {
+  val circeVersion = "0.12.1"
+  Seq(
+    "io.circe" %% "circe-core",
+    "io.circe" %% "circe-generic",
+    "io.circe" %% "circe-parser"
+  ).map(_ % circeVersion)
+
+}
+

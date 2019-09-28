@@ -20,4 +20,9 @@ addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.0.4")
 
 //others
 addSbtPlugin("ch.jodersky" % "sbt-jni" % "1.3.4")
+addSbtPlugin("pl.project13.scala" % "sbt-jmh" % "0.3.7")
+
+//Testing Framework - Java
+resolvers += Resolver.jcenterRepo
 addSbtPlugin("de.johoop" % "sbt-testng-plugin" % "3.1.1")
+addSbtPlugin("net.aichler" % "sbt-jupiter-interface" % "0.8.2")

@@ -1,8 +1,14 @@
-name := "scala-demo"
+name := "sbt-demo"
 
 version := "1.0"
 
 scalaVersion := "2.13.1"
+
+enablePlugins(JmhPlugin)
+enablePlugins(TestNGPlugin)
+javacOptions ++= Seq("-source", "11", "-target", "11")
+compileOrder := CompileOrder.JavaThenScala
+parallelExecution in Test := false
 
 libraryDependencies ++= typelevel ++ reactive ++ validation ++ auxiliary
 
@@ -35,7 +41,11 @@ lazy val validation = {
   Seq(
     "org.scalacheck" %% "scalacheck" % "1.14.0",
     "org.scalatest" %% "scalatest" % "3.0.8",
-    "org.scalamock" %% "scalamock" % "4.4.0"
+    "org.scalamock" %% "scalamock" % "4.4.0",
+    "com.storm-enroute" %% "scalameter" % "0.19",
+    "org.testng" % "testng" % "7.0.0",
+    "net.aichler" % "jupiter-interface" % "0.8.2",
+    "org.junit.jupiter" % "junit-jupiter-engine" % "5.5.2"
   ).map(_ % Test)
 }
 
@@ -100,6 +110,4 @@ lazy val circe = {
     "io.circe" %% "circe-generic",
     "io.circe" %% "circe-parser"
   ).map(_ % circeVersion)
-
 }
-

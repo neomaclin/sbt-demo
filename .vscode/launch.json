@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - InsertionSort",
+            "request": "launch",
+            "mainClass": "org.demo.algos.sort.InsertionSort",
+            "projectName": "sbt-demo_56ae72a2"
+        }
+    ]
+}

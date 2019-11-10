@@ -25,11 +25,10 @@ object Main extends TaskApp with StrictLogging{
           val resources = for {
             _ <- Resource.make(Task(logger.info("starting")))(_ => Task(logger.info("stopping")))
             system <- Resource.make(Task(ActorSystem("demo-system")))(s => Task(s.terminate()))
-            mat <- Resource.make(Task(ActorMaterializer()(system)))(m => Task(m.shutdown()))
-          } yield (system, mat)
+          } yield system
 
-          def execution(resource: (ActorSystem, ActorMaterializer)): Task[_] = {
-            implicit val (system, mat) = resource
+          def execution(resource: ActorSystem): Task[_] = {
+            implicit val system = resource
 
             val output = Source(List(1, 2, 3, 4, 5, 6))
               .via(Flow[Int].dropWhile(_ < 5))
